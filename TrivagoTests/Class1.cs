@@ -8,5 +8,6 @@ namespace TrivagoTests
 {
     public class Class1
     {
+
     }
 }
