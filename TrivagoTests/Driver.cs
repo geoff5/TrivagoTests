@@ -11,14 +11,15 @@ using OpenQA.Selenium.PhantomJS;
 
 namespace TrivagoTests
 {
-    public class Driver
+    public static class Driver
     {
-        string url = String.Empty;
-        string browser = String.Empty;
-        IWebDriver myDriver;
+        public static IWebDriver myDriver;
 
-        public void initialise()
+        public static void initialise()
         {
+            string url = String.Empty;
+            string browser = String.Empty;
+
             url = ConfigurationManager.AppSettings["TrivagoURL"].ToString();
 
             driverChoice(ConfigurationManager.AppSettings["Browser"].ToString().ToLower());
@@ -26,7 +27,7 @@ namespace TrivagoTests
             myDriver.Navigate().GoToUrl(url);
         }
 
-        private void driverChoice(string browser)
+        private static void driverChoice(string browser)
         {
             switch(browser)
             {
@@ -37,6 +38,7 @@ namespace TrivagoTests
                 case "phantomjs":
                     myDriver = new PhantomJSDriver();
                     break;
+
                 default:
                     throw new Exception("An invalid browser was specified in the config file");
             }
