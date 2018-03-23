@@ -19,6 +19,13 @@ namespace TrivagoTests.PageObjects
         [FindsBy(How = How.ClassName, Using = "horus-btn-search__label")]
         private IWebElement searchBtn;
 
+
+        [FindsBy(How = How.ClassName, Using = "btn-horus--checkin")]
+        private IWebElement checkInCalendar;
+
+        [FindsBy(How = How.ClassName, Using = "btn-horus--checkout")]
+        private IWebElement checkOutCalendar;
+
         public SearchPage(IWebDriver driver)
         {
             this.driver = driver;
@@ -35,5 +42,16 @@ namespace TrivagoTests.PageObjects
         {
             searchBtn.Click();
         }
+
+        public void clickCheckInDatePicker()
+        {
+            checkInCalendar.Click();
+        }
+
+        public void clickCheckOutDatePicker()
+        {
+            checkOutCalendar.Click();
+        }
+
     }
 }
