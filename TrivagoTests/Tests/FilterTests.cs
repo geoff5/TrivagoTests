@@ -5,7 +5,9 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using TrivagoTests.PageObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TrivagoTests;
+using TrivagoTests.Resources;
+using TrivagoTests.Utils;
+
 
 namespace TrivagoTests.Tests
 {
@@ -15,11 +17,17 @@ namespace TrivagoTests.Tests
         WebDriverWait wait;
         SearchPage searchPage;
 
+        DateTime today;
+        DateTime threeMonthsAhead;
+        string month = String.Empty;
+
         [TestInitialize]
         public void initialise()
         {
             Driver.initialise();
             searchPage = new SearchPage(Driver.myDriver);
+            threeMonthsAhead = DateUtility.calculateThreeMonthsAhead();
+            month = DateUtility.getMonthText(threeMonthsAhead.Month);
             wait = new WebDriverWait(Driver.myDriver, TimeSpan.FromSeconds(60));
             wait.Until(ExpectedConditions.ElementIsVisible(By.Id("horus-querytext")));
         }
@@ -27,15 +35,20 @@ namespace TrivagoTests.Tests
         [TestMethod]
         public void wifiFilterTest()
         {
-            searchPage.enterSearchLocation("Cork");
+            searchPage.enterSearchLocation(SearchText.Location);
             searchPage.clickSearchBtn();
-            Thread.Sleep(10000);
+            
         }
 
         [TestCleanup]
         public void cleanUpTest()
         {
             Driver.myDriver.Quit();
+        }
+
+        private void selectCheckInDate()
+        {
+
         }
     }
 }
