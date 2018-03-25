@@ -19,7 +19,8 @@ namespace TrivagoTests.Tests
 
         DateTime today;
         DateTime threeMonthsAhead;
-        string month = String.Empty;
+        string monthYear = String.Empty;
+        List<string> searchResults;
 
         [TestInitialize]
         public void initialise()
@@ -27,17 +28,35 @@ namespace TrivagoTests.Tests
             Driver.initialise();
             searchPage = new SearchPage(Driver.myDriver);
             threeMonthsAhead = DateUtility.calculateThreeMonthsAhead();
-            month = DateUtility.getMonthText(threeMonthsAhead.Month);
+            monthYear = DateUtility.getMonthText(threeMonthsAhead.Month);
+            monthYear += " " + threeMonthsAhead.Year.ToString();
             wait = new WebDriverWait(Driver.myDriver, TimeSpan.FromSeconds(60));
             wait.Until(ExpectedConditions.ElementIsVisible(By.Id("horus-querytext")));
-        }
-
-        [TestMethod]
-        public void wifiFilterTest()
-        {
             searchPage.enterSearchLocation(SearchText.Location);
             searchPage.clickSearchBtn();
-            
+            selectCheckInDate();
+            searchPage.clickRoomTypeBtn();
+            searchPage.clickDoubleRoomBtn();
+        }
+
+        [TestMethod, TestCategory("Filter Test")]
+        public void wifiFilterTest()
+        {
+            searchPage.clickFreeWifiBtn();
+            Thread.Sleep(2000);
+            searchResults = searchPage.getSearchResults();
+            Assert.IsTrue(searchResults.Contains(SearchText.CorkInter), "Cork International not in search results");
+            Assert.IsFalse(searchResults.Contains(SearchText.Jurys), "Jurys Inn is in search results");
+        }
+
+        [TestMethod, TestCategory("Filter Test")]
+        public void spaFilterTest()
+        {
+            searchPage.clickSpaBtn();
+            Thread.Sleep(2000);
+            searchResults = searchPage.getSearchResults();
+            Assert.IsTrue(searchResults.Contains(SearchText.RiverLee), "Cork International not in search results");
+            Assert.IsFalse(searchResults.Contains(SearchText.Jurys), "Jurys Inn is in search results");
         }
 
         [TestCleanup]
@@ -48,7 +67,13 @@ namespace TrivagoTests.Tests
 
         private void selectCheckInDate()
         {
+            while(searchPage.getDatePickerMonthYear() != monthYear)
+            {
+                searchPage.clickDatePickerNextBtn();
+                Thread.Sleep(2000);
+            }
 
+            searchPage.clickCurrentDayElement(threeMonthsAhead.Day.ToString());
         }
     }
 }

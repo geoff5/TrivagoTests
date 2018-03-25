@@ -19,12 +19,29 @@ namespace TrivagoTests.PageObjects
         [FindsBy(How = How.ClassName, Using = "horus-btn-search__label")]
         private IWebElement searchBtn;
 
-
         [FindsBy(How = How.ClassName, Using = "btn-horus--checkin")]
         private IWebElement checkInCalendar;
 
-        [FindsBy(How = How.ClassName, Using = "btn-horus--checkout")]
-        private IWebElement checkOutCalendar;
+        [FindsBy(How = How.ClassName, Using = "btn-horus--roomtype")]
+        private IWebElement roomTypeBtn;
+
+        [FindsBy(How = How.XPath, Using = "//span[contains(text(), 'Double Room')]")]
+        private IWebElement doubleRoomBtn;
+
+        [FindsBy(How = How.XPath, Using = "//th[starts-with(@id, 'cal-heading-mon')]")]
+        private IWebElement datePickerMonthYear;
+
+        [FindsBy(How = How.ClassName, Using = "cal-btn-next")]
+        private IWebElement datePickerNextBtn;
+
+        [FindsBy(How = How.XPath, Using = "//*[@id='js-fullscreen-hero']/div/form/div[2]/div[2]/div/table[1]/tbody")]
+        private IWebElement datePickerDaysTable;
+
+        [FindsBy(How = How.XPath, Using = "//*[@title = 'Free WiFi']")]
+        private IWebElement freeWifiBtn;
+
+        [FindsBy(How = How.XPath, Using = "//*[@title = 'Spa']")]
+        private IWebElement spaBtn;
 
         public SearchPage(IWebDriver driver)
         {
@@ -48,10 +65,60 @@ namespace TrivagoTests.PageObjects
             checkInCalendar.Click();
         }
 
-        public void clickCheckOutDatePicker()
+        public void clickRoomTypeBtn()
         {
-            checkOutCalendar.Click();
+            roomTypeBtn.Click();
         }
 
+        public void clickDoubleRoomBtn()
+        {
+            doubleRoomBtn.Click();
+        }
+
+        public void clickFreeWifiBtn()
+        {
+            freeWifiBtn.Click();
+        }
+
+        public void clickSpaBtn()
+        {
+            spaBtn.Click();
+        }
+
+        public string getDatePickerMonthYear()
+        {
+            return datePickerMonthYear.Text;
+        }
+
+        public void clickDatePickerNextBtn()
+        {
+            datePickerNextBtn.Click();
+        }
+
+        public void clickCurrentDayElement(string currentDay)
+        {
+            List<IWebElement> days = datePickerDaysTable.FindElements(By.XPath("//td[@class='cal-day-wrap']")).ToList();
+            foreach(IWebElement day in days)
+            {
+                if(day.Text.Equals(currentDay))
+                {
+                    day.Click();
+                    break;
+                }
+            }
+        }
+
+        public List<string> getSearchResults()
+        {
+            List<string> results = new List<string>();
+
+            List<IWebElement> searchElements = driver.FindElements(By.XPath("//h3[@class='name__copytext m-0 item__slideout-toggle']")).ToList();
+            foreach(IWebElement element in searchElements)
+            {
+                results.Add(element.Text);
+            }
+
+            return results;
+        }
     }
 }

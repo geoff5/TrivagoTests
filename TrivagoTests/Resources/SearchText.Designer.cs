@@ -61,11 +61,38 @@ namespace TrivagoTests.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cork International Hotel.
+        /// </summary>
+        internal static string CorkInter {
+            get {
+                return ResourceManager.GetString("CorkInter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Jurys Inn Cork.
+        /// </summary>
+        internal static string Jurys {
+            get {
+                return ResourceManager.GetString("Jurys", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cork.
         /// </summary>
         internal static string Location {
             get {
                 return ResourceManager.GetString("Location", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The River Lee.
+        /// </summary>
+        internal static string RiverLee {
+            get {
+                return ResourceManager.GetString("RiverLee", resourceCulture);
             }
         }
     }
