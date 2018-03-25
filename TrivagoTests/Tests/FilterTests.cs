@@ -23,7 +23,7 @@ namespace TrivagoTests.Tests
         List<string> searchResults;
 
         [TestInitialize]
-        public void initialise()
+        public void initialise()//Runs common code to initialise driver and set up each test
         {
             Driver.initialise();
             searchPage = new SearchPage(Driver.myDriver);
@@ -40,7 +40,7 @@ namespace TrivagoTests.Tests
         }
 
         [TestMethod, TestCategory("Filter Test")]
-        public void wifiFilterTest()
+        public void wifiFilterTest()//Tests the free WiFi filter.  Will fail as the Jurys Inn appears in search results
         {
             searchPage.clickFreeWifiBtn();
             Thread.Sleep(2000);
@@ -50,22 +50,22 @@ namespace TrivagoTests.Tests
         }
 
         [TestMethod, TestCategory("Filter Test")]
-        public void spaFilterTest()
+        public void spaFilterTest()//Tests the Spa filter.
         {
             searchPage.clickSpaBtn();
             Thread.Sleep(2000);
             searchResults = searchPage.getSearchResults();
-            Assert.IsTrue(searchResults.Contains(SearchText.RiverLee), "Cork International not in search results");
+            Assert.IsTrue(searchResults.Contains(SearchText.RiverLee), "River Lee Hotel not in search results");
             Assert.IsFalse(searchResults.Contains(SearchText.Jurys), "Jurys Inn is in search results");
         }
 
         [TestCleanup]
-        public void cleanUpTest()
+        public void cleanUpTest()//Closes down the driver after each test
         {
             Driver.myDriver.Quit();
         }
 
-        private void selectCheckInDate()
+        private void selectCheckInDate()//private method to select the date of check in
         {
             while(searchPage.getDatePickerMonthYear() != monthYear)
             {

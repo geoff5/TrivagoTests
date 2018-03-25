@@ -12,21 +12,16 @@ namespace TrivagoTests.PageObjects
     {
         private IWebDriver driver;
         
-
+        //Search bar elements
         [FindsBy(How = How.Id, Using = "horus-querytext")]
         private IWebElement searchBar;
 
         [FindsBy(How = How.ClassName, Using = "horus-btn-search__label")]
         private IWebElement searchBtn;
 
+        //Check in date picker elements
         [FindsBy(How = How.ClassName, Using = "btn-horus--checkin")]
         private IWebElement checkInCalendar;
-
-        [FindsBy(How = How.ClassName, Using = "btn-horus--roomtype")]
-        private IWebElement roomTypeBtn;
-
-        [FindsBy(How = How.XPath, Using = "//span[contains(text(), 'Double Room')]")]
-        private IWebElement doubleRoomBtn;
 
         [FindsBy(How = How.XPath, Using = "//th[starts-with(@id, 'cal-heading-mon')]")]
         private IWebElement datePickerMonthYear;
@@ -37,18 +32,28 @@ namespace TrivagoTests.PageObjects
         [FindsBy(How = How.XPath, Using = "//*[@id='js-fullscreen-hero']/div/form/div[2]/div[2]/div/table[1]/tbody")]
         private IWebElement datePickerDaysTable;
 
+        //Room type picker elements 
+        [FindsBy(How = How.ClassName, Using = "btn-horus--roomtype")]
+        private IWebElement roomTypeBtn;
+
+        [FindsBy(How = How.XPath, Using = "//span[contains(text(), 'Double Room')]")]
+        private IWebElement doubleRoomBtn;
+
+        //Filter elements
         [FindsBy(How = How.XPath, Using = "//*[@title = 'Free WiFi']")]
         private IWebElement freeWifiBtn;
 
         [FindsBy(How = How.XPath, Using = "//*[@title = 'Spa']")]
         private IWebElement spaBtn;
 
+        //Constructor
         public SearchPage(IWebDriver driver)
         {
             this.driver = driver;
             PageFactory.InitElements(driver, this);
         }
 
+        //Search bar methods
         public void enterSearchLocation(string location)
         {
             searchBar.Clear();
@@ -60,29 +65,10 @@ namespace TrivagoTests.PageObjects
             searchBtn.Click();
         }
 
+        //Date picker methods
         public void clickCheckInDatePicker()
         {
             checkInCalendar.Click();
-        }
-
-        public void clickRoomTypeBtn()
-        {
-            roomTypeBtn.Click();
-        }
-
-        public void clickDoubleRoomBtn()
-        {
-            doubleRoomBtn.Click();
-        }
-
-        public void clickFreeWifiBtn()
-        {
-            freeWifiBtn.Click();
-        }
-
-        public void clickSpaBtn()
-        {
-            spaBtn.Click();
         }
 
         public string getDatePickerMonthYear()
@@ -95,12 +81,12 @@ namespace TrivagoTests.PageObjects
             datePickerNextBtn.Click();
         }
 
-        public void clickCurrentDayElement(string currentDay)
+        public void clickCurrentDayElement(string currentDay)//Finds the element for the passed in date and clicks on it
         {
             List<IWebElement> days = datePickerDaysTable.FindElements(By.XPath("//td[@class='cal-day-wrap']")).ToList();
-            foreach(IWebElement day in days)
+            foreach (IWebElement day in days)
             {
-                if(day.Text.Equals(currentDay))
+                if (day.Text.Equals(currentDay))
                 {
                     day.Click();
                     break;
@@ -108,6 +94,29 @@ namespace TrivagoTests.PageObjects
             }
         }
 
+        //Room type selector methods
+        public void clickRoomTypeBtn()
+        {
+            roomTypeBtn.Click();
+        }
+
+        public void clickDoubleRoomBtn()
+        {
+            doubleRoomBtn.Click();
+        }
+
+        //Filter selection methods
+        public void clickFreeWifiBtn()
+        {
+            freeWifiBtn.Click();
+        }
+
+        public void clickSpaBtn()
+        {
+            spaBtn.Click();
+        }
+       
+        //Method to return a list of the hotel search results
         public List<string> getSearchResults()
         {
             List<string> results = new List<string>();

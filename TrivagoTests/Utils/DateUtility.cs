@@ -8,7 +8,7 @@ namespace TrivagoTests.Utils
 {
     public static class DateUtility
     {
-        public static DateTime calculateThreeMonthsAhead()
+        public static DateTime calculateThreeMonthsAhead()//Calculates the current date three months from today
         {
             DateTime today = new DateTime();
             DateTime threeMonthsAhead = new DateTime();
@@ -18,7 +18,7 @@ namespace TrivagoTests.Utils
             return threeMonthsAhead;
         }
 
-        public static string getMonthText(int month)
+        public static string getMonthText(int month)//Returns the month value for the int passed in
         {
             string[] months = { "", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
             return months[month];

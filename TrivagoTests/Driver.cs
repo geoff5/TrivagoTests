@@ -15,19 +15,19 @@ namespace TrivagoTests
     {
         public static IWebDriver myDriver;
 
-        public static void initialise()
+        public static void initialise()//Create a driver class that can be accessed from the test classes 
         {
             string url = String.Empty;
             string browser = String.Empty;
 
-            url = ConfigurationManager.AppSettings["TrivagoURL"].ToString();
+            url = ConfigurationManager.AppSettings["TrivagoURL"].ToString();//Pass in the Trivago URL 
 
             driverChoice(ConfigurationManager.AppSettings["Browser"].ToString().ToLower());
             myDriver.Manage().Window.Maximize();
             myDriver.Navigate().GoToUrl(url);
         }
 
-        private static void driverChoice(string browser)
+        private static void driverChoice(string browser)//Check the config file for which browser to use and initialise it
         {
             switch(browser)
             {
